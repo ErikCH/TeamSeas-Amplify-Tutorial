@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "esnext"],
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "outDir": "./src",
+    "rootDir": "./src",
+    "baseUrl": "./"
+  },
+  "include": ["./src/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

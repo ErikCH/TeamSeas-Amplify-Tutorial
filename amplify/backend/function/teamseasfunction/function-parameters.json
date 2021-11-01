@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "auth": {
+      "teamseasvueaws978c8fcb": [
+        "create"
+      ]
+    },
+    "api": {
+      "teamseasvueaws": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "secretNames": [
+    "GOOGLE_ACCESS_KEY",
+    "clientid",
+    "password",
+    "username",
+    "userpoolid"
+  ]
+}

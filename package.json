@@ -1,0 +1,24 @@
+{
+  "name": "teamseas-vue-aws",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "amplify:teamseasfunction": "cd ./amplify/backend/function/teamseasfunction && tsc -p ./tsconfig.json && cd -"
+  },
+  "dependencies": {
+    "@aws-amplify/ui-vue": "0.0.0-next-202192921162",
+    "aws-amplify": "^4.3.4",
+    "vue": "^3.2.16"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.3",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.4",
+    "vue-tsc": "^0.3.0"
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Parameters": {
+    "CloudWatchRule": {
+      "Type": "String",
+      "Default": "NONE",
+      "Description": " Schedule Expression"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "env": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
+    },
+    "authteamseasvueaws978c8fcbUserPoolId": {
+      "Type": "String",
+      "Default": "authteamseasvueaws978c8fcbUserPoolId"
+    },
+    "apiteamseasvueawsGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiteamseasvueawsGraphQLAPIIdOutput"
+    },
+    "apiteamseasvueawsGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apiteamseasvueawsGraphQLAPIEndpointOutput"
+    },
+    "apiteamseasvueawsGraphQLAPIKeyOutput": {
+      "Type": "String",
+      "Default": "apiteamseasvueawsGraphQLAPIKeyOutput"
+    },
+    "secretsPathAmplifyAppId": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
+        },
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "teamseasfunction",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "teamseasfunction",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "AUTH_TEAMSEASVUEAWS978C8FCB_USERPOOLID": {
+              "Ref": "authteamseasvueaws978c8fcbUserPoolId"
+            },
+            "API_TEAMSEASVUEAWS_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apiteamseasvueawsGraphQLAPIIdOutput"
+            },
+            "API_TEAMSEASVUEAWS_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apiteamseasvueawsGraphQLAPIEndpointOutput"
+            },
+            "API_TEAMSEASVUEAWS_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apiteamseasvueawsGraphQLAPIKeyOutput"
+            },
+            "GOOGLE_ACCESS_KEY": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "teamseasfunction"
+                      }
+                    ]
+                  },
+                  "GOOGLE_ACCESS_KEY"
+                ]
+              ]
+            },
+            "clientid": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "teamseasfunction"
+                      }
+                    ]
+                  },
+                  "clientid"
+                ]
+              ]
+            },
+            "password": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "teamseasfunction"
+                      }
+                    ]
+                  },
+                  "password"
+                ]
+              ]
+            },
+            "username": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "teamseasfunction"
+                      }
+                    ]
+                  },
+                  "username"
+                ]
+              ]
+            },
+            "userpoolid": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "teamseasfunction"
+                      }
+                    ]
+                  },
+                  "userpoolid"
+                ]
+              ]
+            }
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs14.x",
+        "Layers": [],
+        "Timeout": 25
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "teamseasvueawsLambdaRole7be180be",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "teamseasvueawsLambdaRole7be180be",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cognito-idp:ConfirmSignUp",
+                "cognito-idp:AdminCreateUser",
+                "cognito-idp:CreateUserImportJob",
+                "cognito-idp:AdminSetUserSettings",
+                "cognito-idp:AdminLinkProviderForUser",
+                "cognito-idp:CreateIdentityProvider",
+                "cognito-idp:AdminConfirmSignUp",
+                "cognito-idp:AdminDisableUser",
+                "cognito-idp:AdminRemoveUserFromGroup",
+                "cognito-idp:SetUserMFAPreference",
+                "cognito-idp:SetUICustomization",
+                "cognito-idp:SignUp",
+                "cognito-idp:VerifyUserAttribute",
+                "cognito-idp:SetRiskConfiguration",
+                "cognito-idp:StartUserImportJob",
+                "cognito-idp:AdminSetUserPassword",
+                "cognito-idp:AssociateSoftwareToken",
+                "cognito-idp:CreateResourceServer",
+                "cognito-idp:RespondToAuthChallenge",
+                "cognito-idp:CreateUserPoolClient",
+                "cognito-idp:AdminUserGlobalSignOut",
+                "cognito-idp:GlobalSignOut",
+                "cognito-idp:AddCustomAttributes",
+                "cognito-idp:CreateGroup",
+                "cognito-idp:CreateUserPool",
+                "cognito-idp:AdminForgetDevice",
+                "cognito-idp:AdminAddUserToGroup",
+                "cognito-idp:AdminRespondToAuthChallenge",
+                "cognito-idp:ForgetDevice",
+                "cognito-idp:CreateUserPoolDomain",
+                "cognito-idp:AdminEnableUser",
+                "cognito-idp:AdminUpdateDeviceStatus",
+                "cognito-idp:StopUserImportJob",
+                "cognito-idp:InitiateAuth",
+                "cognito-idp:AdminInitiateAuth",
+                "cognito-idp:AdminSetUserMFAPreference",
+                "cognito-idp:ConfirmForgotPassword",
+                "cognito-idp:SetUserSettings",
+                "cognito-idp:VerifySoftwareToken",
+                "cognito-idp:AdminDisableProviderForUser",
+                "cognito-idp:SetUserPoolMfaConfig",
+                "cognito-idp:ChangePassword",
+                "cognito-idp:ConfirmDevice",
+                "cognito-idp:AdminResetUserPassword",
+                "cognito-idp:ResendConfirmationCode"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:cognito-idp:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":userpool/",
+                      {
+                        "Ref": "authteamseasvueaws978c8fcbUserPoolId"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "appsync:GraphQL"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apiteamseasvueawsGraphQLAPIIdOutput"
+                      },
+                      "/types/Query/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apiteamseasvueawsGraphQLAPIIdOutput"
+                      },
+                      "/types/Mutation/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CloudWatchEvent": {
+      "Type": "AWS::Events::Rule",
+      "Properties": {
+        "Description": "Schedule rule for Lambda",
+        "ScheduleExpression": {
+          "Ref": "CloudWatchRule"
+        },
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "LambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": {
+              "Ref": "LambdaFunction"
+            }
+          }
+        ]
+      }
+    },
+    "PermissionForEventsToInvokeLambda": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "LambdaFunction"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "CloudWatchEvent",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "AmplifyFunctionSecretsPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-function-secrets-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ssm:GetParameter",
+                "ssm:GetParameters"
+              ],
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:ssm:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":parameter",
+                    {
+                      "Fn::Sub": [
+                        "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                        {
+                          "appId": {
+                            "Ref": "secretsPathAmplifyAppId"
+                          },
+                          "env": {
+                            "Ref": "env"
+                          },
+                          "functionName": "teamseasfunction"
+                        }
+                      ]
+                    },
+                    "*"
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ]
+    }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    },
+    "CloudWatchEventRule": {
+      "Value": {
+        "Ref": "CloudWatchEvent"
+      }
+    }
+  }
+}

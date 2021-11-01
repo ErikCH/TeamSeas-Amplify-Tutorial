@@ -1,0 +1,27 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-teamseasvueaws-dev-141642-authRole",
+      "UnauthRoleArn": "arn:aws:iam::127847013811:role/amplify-teamseasvueaws-dev-141642-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::127847013811:role/amplify-teamseasvueaws-dev-141642-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-teamseasvueaws-dev-141642-deployment",
+      "UnauthRoleName": "amplify-teamseasvueaws-dev-141642-unauthRole",
+      "StackName": "amplify-teamseasvueaws-dev-141642",
+      "StackId": "arn:aws:cloudformation:us-east-2:127847013811:stack/amplify-teamseasvueaws-dev-141642/dbfa48b0-3a8f-11ec-8210-0a2357a74f22",
+      "AmplifyAppId": "d17dyh5y5c4zd0"
+    },
+    "categories": {
+      "auth": {
+        "teamseasvueaws978c8fcb": {}
+      },
+      "function": {
+        "teamseasfunction": {
+          "secretsPathAmplifyAppId": "d17dyh5y5c4zd0",
+          "deploymentBucketName": "amplify-teamseasvueaws-dev-141642-deployment",
+          "s3Key": "amplify-builds/teamseasfunction-3978637574435a684347-build.zip"
+        }
+      }
+    }
+  }
+}

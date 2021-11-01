@@ -1,0 +1,19 @@
+type Video
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Admin"] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  videoid: String
+  publishedAt: AWSDateTime
+  channelId: String
+  title: String
+  description: String
+  thumnbnailDefault: String
+  thumbnailMediume: String
+  thumbnailHigh: String
+  channelTitle: String
+  datetime: AWSDateTime
+}
