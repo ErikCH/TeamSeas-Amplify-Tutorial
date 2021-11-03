@@ -1,6 +1,6 @@
 projects:
   teamseasvueaws:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/teamseasvueaws/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

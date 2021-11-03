@@ -19,7 +19,7 @@
         "teamseasfunction": {
           "secretsPathAmplifyAppId": "d17dyh5y5c4zd0",
           "deploymentBucketName": "amplify-teamseasvueaws-dev-141642-deployment",
-          "s3Key": "amplify-builds/teamseasfunction-3978637574435a684347-build.zip"
+          "s3Key": "amplify-builds/teamseasfunction-49533570597654772b52-build.zip"
         }
       }
     }

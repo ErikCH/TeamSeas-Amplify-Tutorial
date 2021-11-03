@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.grabYTData = exports.formatVideos = void 0;
 const api_1 = require("../api");
 const uuid_1 = require("uuid");
-// let YT_URL_PARTIAL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%23%23teamseas&maxResults=100&key=AIzaSyDMdXSppfGikESfiwgImN4M5j-gO5EHcCY";
 let YT_URL_PARTIAL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%23%23teamseas&maxResults=2&key=";
 async function getYTURL() {
     const Parameters = await (0, api_1.grabSecrets)();
@@ -30,7 +29,6 @@ async function formatVideos(fetch) {
     });
 }
 exports.formatVideos = formatVideos;
-const VIDEO_URL = "https://www.youtube.com/watch?v=";
 //https://stackoverflow.com/questions/14173428/how-to-change-page-results-with-youtube-data-api-v3
 let nextPageToken = "";
 let timesThrough = 0;

@@ -11,7 +11,6 @@ async function getAppSyncClient() {
     let cred;
     let credExpirationDate = new Date("01-01-1970"); // to keep track of if credentials are out of date
     const url = process.env.API_TEAMSEASVUEAWS_GRAPHQLAPIENDPOINTOUTPUT;
-    console.log("url", url);
     return new aws_appsync_1.default({
         disableOffline: true,
         url,
@@ -20,11 +19,9 @@ async function getAppSyncClient() {
             type: "AMAZON_COGNITO_USER_POOLS",
             jwtToken: async () => {
                 // check if we already have credentials or if credentials are expired
-                console.log("before getting crednetials");
                 if (!cred || credExpirationDate < new Date()) {
                     // get new credentials
                     cred = await (0, api_1.getCredentials)();
-                    console.log("before getting aafter");
                     // give ourselves a 10 minute leeway here
                     credExpirationDate = new Date(+new Date() + (cred.AuthenticationResult.ExpiresIn - 600) * 1000);
                 }

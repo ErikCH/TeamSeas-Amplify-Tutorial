@@ -1,7 +1,6 @@
 import { grabSecrets, findSecret } from "../api";
 import { v4 as uuidv4 } from "uuid";
 
-// let YT_URL_PARTIAL = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%23%23teamseas&maxResults=100&key=AIzaSyDMdXSppfGikESfiwgImN4M5j-gO5EHcCY";
 let YT_URL_PARTIAL =
   "https://www.googleapis.com/youtube/v3/search?part=snippet&q=%23%23teamseas&maxResults=2&key=";
 
@@ -32,8 +31,6 @@ export async function formatVideos(fetch) {
     };
   });
 }
-
-const VIDEO_URL = "https://www.youtube.com/watch?v=";
 
 //https://stackoverflow.com/questions/14173428/how-to-change-page-results-with-youtube-data-api-v3
 
